@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        
+:root{--green:#8f0d0d;--green2:#b51616;--brand:#9f1111;--brand-dark:#710808;--bg:#eeeae8;--panel:#f7f4f2;--line:#dfd5d2;--text:#281b1b;--muted:#756765;--danger:#d93b3b;--warn:#e3a416}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg)}
+#app{height:100vh;display:grid;grid-template-columns:285px minmax(420px,1fr) 330px;grid-template-rows:64px minmax(0,1fr) 38px;grid-template-areas:'top top top' 'left map right' 'ticker ticker ticker';gap:0}
+.client-logo{height:38px;width:auto;max-width:220px;object-fit:contain}.topbar{grid-area:top;background:linear-gradient(90deg,#fff 0%,#fff 68%,#f6ece9 100%);border-top:4px solid var(--brand);border-bottom:1px solid #d7c7c3;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:2000}.brand{display:flex;gap:10px;align-items:center}.brandmark{width:38px;height:38px;border-radius:10px;background:var(--green);color:#fff;font-weight:900;font-size:23px;display:grid;place-items:center}.brand b{display:block;letter-spacing:.08em}.brand span{font-size:12px;color:var(--muted)}.topmeta{display:flex;gap:18px;font-size:13px}.online{color:var(--brand);font-weight:700}.logout-btn{border:1px solid var(--brand);background:#fff;color:var(--brand);border-radius:8px;padding:7px 11px;font-weight:800;font-size:12px;cursor:pointer;transition:.18s}.logout-btn:hover{background:var(--brand);color:#fff}
+.sidebar{background:linear-gradient(180deg,#faf8f7 0%,#f2eeec 100%);padding:14px;overflow:auto;z-index:1000}.leftbar{grid-area:left;border-right:1px solid #d9cbc7;box-shadow:3px 0 12px rgba(90,20,20,.04)}.rightbar{grid-area:right;border-left:1px solid #d9cbc7;box-shadow:-3px 0 12px rgba(90,20,20,.04)}.sidebar section{padding:0 0 14px;margin:0 0 14px;border-bottom:1px solid #edf1ef}.sidebar h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--brand-dark);margin:0 0 9px}.sidebar label{display:grid;grid-template-columns:22px minmax(0,1fr);align-items:center;column-gap:8px;padding:5px 2px;font-size:13px;line-height:1.25}.sidebar label input[type=radio],.sidebar label input[type=checkbox]{width:16px;height:16px;margin:0;justify-self:center;accent-color:var(--green)}.sidebar label span{min-width:0}.sidebar select,.sidebar input:not([type=radio]):not([type=checkbox]){width:100%;border:1px solid #ccd8d2;border-radius:8px;padding:9px;background:#fff;margin-bottom:7px}.btn{width:100%;border:0;border-radius:8px;background:var(--green);color:#fff;padding:9px 10px;font-weight:700;margin:4px 0;cursor:pointer}.btn.ghost{background:#eef4f1;color:var(--green)}
+.maparea{grid-area:map;position:relative;min-width:0;min-height:0;background:#e9e5e3}#map{width:100%;height:100%;background:#e9e5e3}.leaflet-control-layers{display:none!important}.leaflet-control-attribution{display:none!important}.north{position:absolute;right:14px;top:14px;z-index:900;background:#fff;border-radius:10px;padding:8px 11px;box-shadow:0 2px 10px #0002;text-align:center;font-size:22px}.north small{display:block;font-size:10px}.mapstats{position:absolute;left:12px;bottom:28px;z-index:900;background:#fff;border-radius:8px;padding:6px 9px;font-size:11px;box-shadow:0 2px 8px #0002}.maptools{position:absolute;left:58px;top:12px;z-index:1000;display:flex;flex-direction:column;gap:5px}.maptools button{width:38px;height:38px;border:1px solid #ccd8d2;background:#fff;border-radius:8px;font-size:17px;box-shadow:0 2px 8px #0002;cursor:pointer}.maptools button.active,.maptools button:hover{background:var(--green);color:#fff}.measure-subtools{display:none;flex-direction:column;gap:5px}.maptools.open .measure-subtools{display:flex}.drawbar{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:22px;z-index:1100;background:#17231de8;color:#fff;padding:8px 10px;border-radius:12px;gap:8px;align-items:center}.drawbar.show{display:flex}.drawbar button{border:0;border-radius:7px;padding:6px 9px}.ticker{grid-area:ticker;background:#3a1717;color:#fff;display:flex;align-items:center;overflow:hidden;z-index:2100}.ticker>b{height:100%;display:flex;align-items:center;padding:0 18px;background:var(--brand);font-size:12px;letter-spacing:.08em}.ticker-window{overflow:hidden;white-space:nowrap;flex:1}.ticker-window>div{display:inline-block;padding-left:100%;animation:ticker 32s linear infinite;font-size:13px}@keyframes ticker{to{transform:translateX(-100%)}}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;margin-top:5px}.legend span{display:flex;align-items:center;gap:4px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.red{background:var(--danger)}.yellow{background:var(--warn)}.green{background:#2e9d62}.empty,.measure-help{font-size:12px;color:var(--muted);line-height:1.45}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.info-card{background:#f5f8f6;border-radius:8px;padding:8px}.info-card small{display:block;color:var(--muted);font-size:10px}.info-card b{font-size:13px}.statuspill{display:inline-block;border-radius:99px;padding:4px 8px;font-size:10px;font-weight:800}.status-ATRASADO{background:#fde4e4;color:#a82020}.status-PRÓXIMO{background:#fff2cc;color:#966900}.status-CONCLUÍDO{background:#dff3e7;color:#216d43}.status-PROGRAMADO{background:#e5edf7;color:#365d8a}.status-SEM{background:#eee;color:#666}.talhao-label{background:rgba(255,255,255,.9);border:1px solid #31463c;border-radius:5px;color:#15241d;font-weight:800;font-size:10px;padding:2px 5px;box-shadow:0 1px 3px #0003}.talhao-label.alert-red{background:#c92f2f;color:#fff;border-color:#8e1717}.talhao-label.alert-yellow{background:#f2c037;color:#332600;border-color:#a97800}.talhao-label.alert-red:before{content:'⚠ '}.talhao-label.alert-yellow:before{content:'● '}.tablewrap{max-height:245px;overflow:auto;margin:8px 0}table{width:100%;border-collapse:collapse;font-size:11px}th,td{padding:6px 4px;border-bottom:1px solid #e6ece9;text-align:left}td button{border:0;background:#f7e7e7;color:#a22;border-radius:5px;cursor:pointer}.leaflet-control-scale{margin-left:12px!important;margin-bottom:8px!important}.leaflet-control-scale-line{background:#ffffffd9!important}
+@media(max-width:1050px){#app{grid-template-columns:250px 1fr;grid-template-areas:'top top' 'left map' 'ticker ticker'}.rightbar{position:absolute;right:0;top:64px;bottom:38px;width:310px;z-index:1500;box-shadow:-4px 0 15px #0002}} 
+</style>
+        <title></title>
+    </head>
+    <body>
+<script>
+if (sessionStorage.getItem('decorbras_auth') !== 'ok') {
+  window.location.replace('login.html');
+}
+</script>
+<div id="app">
+<header class="topbar"><div class="brand"><img class="client-logo" src="images/logo_decorbras.png" alt="Decorbras"><div><b>WEBGIS FLORESTAL</b><span>Gestão operacional e geoespacial</span></div></div><div class="topmeta"><span id="clock"></span><span class="online">● Operacional</span><button id="logoutBtn" class="logout-btn" type="button">Logout</button></div></header>
+<aside class="sidebar leftbar">
+  <section><h3>Fazenda</h3><select id="farmSelect"><option>Centro — CT</option></select><input id="searchTalhao" placeholder="Buscar talhão (ex.: CT_T001)"></section>
+  <section><h3>Base Maps</h3><label><input type="radio" name="base" value="sat" checked><span>Google Satellite</span></label><label><input type="radio" name="base" value="road"><span>Google Road</span></label><label><input type="radio" name="base" value="topo"><span>OpenTopoMap</span></label><label><input type="radio" name="base" value="none"><span>Nenhum</span></label></section>
+  <section><h3>Mapas Temáticos</h3><label><input class="theme" type="checkbox" data-theme="talhoes" checked><span>Talhões</span></label><label><input class="theme" type="checkbox" data-theme="uso"><span>Uso do Solo</span></label><label><input class="theme" type="checkbox" data-theme="hidro"><span>Hidrografia</span></label><label><input class="theme" type="checkbox" data-theme="sicar" checked><span>Imóveis do SICAR</span></label><label><input class="theme" type="checkbox" data-theme="orto" checked><span>Ortomosaico Fotogramétrico</span></label><label><input class="theme" type="checkbox" data-theme="mds"><span>MDS</span></label></section>
+  <section><h3>Setor / Operação</h3><select id="operation"><option value="">Visão geral</option><option>Plantio</option><option>Replantio</option><option>Formicida</option><option>Herbicida</option><option value="Rocada">Roçada</option><option value="Adubacao">Adubação</option><option>Poda</option><option>Desbaste</option><option>Inventario</option><option>Colheita</option><option>Ocorrencias</option></select><div class="legend"><span><i class="dot red"></i>Atrasado</span><span><i class="dot yellow"></i>≤ 30 dias</span><span><i class="dot green"></i>Concluído</span></div></section>
+  <section><h3>Relatórios</h3><button class="btn" id="exportCSV">Exportar dados (CSV)</button><button class="btn ghost" id="printReport">Gerar relatório / PDF</button></section>
+</aside>
+<main class="maparea"><div id="map"></div><div class="maptools" id="measureTools"><button id="measureMain" title="Medições" aria-label="Medições">📐</button><div class="measure-subtools"><button id="toolPoint" title="Marcar ponto">●</button><button id="toolLine" title="Medir caminho">⌁</button><button id="toolPoly" title="Medir área">⬠</button></div></div><div id="drawbar" class="drawbar"><b id="drawmode">Desenho</b><button id="finishDraw">Finalizar</button><button id="cancelDraw">Cancelar</button></div><div class="north">▲<small>N</small></div><div class="mapstats"><b id="talhaoCount">19</b> talhões · <b>41,37 ha</b></div></main>
+<aside class="sidebar rightbar"><section><h3>Informações do Talhão</h3><div id="talhaoInfo" class="empty">Clique em um talhão para visualizar o cadastro e o status operacional.</div></section><section><h3>Medições e Anotações</h3><div class="measure-help">Use as ferramentas sobre o mapa. Finalize cada geometria para incluí-la abaixo.</div><div class="tablewrap"><table id="measureTable"><thead><tr><th>#</th><th>Tipo</th><th>Informação</th><th></th></tr></thead><tbody></tbody></table></div><button class="btn" id="exportGeoJSON">Exportar vetores (GeoJSON)</button><button class="btn ghost" id="clearVectors">Limpar todos</button></section></aside>
+<div class="ticker"><b>ALERTAS</b><div class="ticker-window"><div id="tickerText">Selecione uma operação para visualizar os alertas operacionais dos talhões.</div></div></div>
+</div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/ImveisdoSicar_18.js"></script>
+        <script src="data/Curso_d_agua_19.js"></script>
+        <script src="data/Aude_20.js"></script>
+        <script src="data/Banhado_21.js"></script>
+        <script src="data/APP_22.js"></script>
+        <script src="data/Vegetao_23.js"></script>
+        <script src="data/Estradas_24.js"></script>
+        <script src="data/Benfeitorias_25.js"></script>
+        <script src="data/Talhes_26.js"></script>
+        <script src="data/demo_operations.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, attributionControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-26.957391475997014,-49.840229171540436],[-26.90525838383756,-49.727473234870935]]);
+        // Aproximação inicial: +2 níveis de zoom após o enquadramento original.
+        map.setZoom(map.getZoom() + 2);
+        var hash = new L.Hash(map);
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenTopoMap_0');
+        map.getPane('pane_OpenTopoMap_0').style.zIndex = 400;
+        var layer_OpenTopoMap_0 = L.tileLayer('https://a.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenTopoMap_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">Kartendaten: © OpenStreetMap-Mitwirkende, SRTM | Kartendarstellung: © OpenTopoMap (CC-BY-SA)</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_OpenTopoMap_0;
+        map.createPane('pane_GoogleRoad_1');
+        map.getPane('pane_GoogleRoad_1').style.zIndex = 401;
+        var layer_GoogleRoad_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleRoad_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleRoad_1;
+        map.createPane('pane_GoogleSatellite_2');
+        map.getPane('pane_GoogleSatellite_2').style.zIndex = 402;
+        var layer_GoogleSatellite_2 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_2',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_2;
+        map.addLayer(layer_GoogleSatellite_2);
+        map.createPane('pane_MDS_Talhoes_3');
+        map.getPane('pane_MDS_Talhoes_3').style.zIndex = 403;
+        var img_MDS_Talhoes_3 = 'data/MDS_Talhoes_3.png';
+        var img_bounds_MDS_Talhoes_3 = [[-26.942530197520558,-49.799007197114946],[-26.91536619209106,-49.79236456475388]];
+        var layer_MDS_Talhoes_3 = new L.imageOverlay(img_MDS_Talhoes_3,
+                                              img_bounds_MDS_Talhoes_3,
+                                              {pane: 'pane_MDS_Talhoes_3'});
+        bounds_group.addLayer(layer_MDS_Talhoes_3);
+        map.createPane('pane_Orto_Decor00_4');
+        map.getPane('pane_Orto_Decor00_4').style.zIndex = 404;
+        var img_Orto_Decor00_4 = 'data/Orto_Decor00_4.png';
+        var img_bounds_Orto_Decor00_4 = [[-26.918029341438206,-49.800169426936336],[-26.914562324731456,-49.795803227585644]];
+        var layer_Orto_Decor00_4 = new L.imageOverlay(img_Orto_Decor00_4,
+                                              img_bounds_Orto_Decor00_4,
+                                              {pane: 'pane_Orto_Decor00_4'});
+        bounds_group.addLayer(layer_Orto_Decor00_4);
+        map.addLayer(layer_Orto_Decor00_4);
+        map.createPane('pane_Orto_Decor01_5');
+        map.getPane('pane_Orto_Decor01_5').style.zIndex = 405;
+        var img_Orto_Decor01_5 = 'data/Orto_Decor01_5.png';
+        var img_bounds_Orto_Decor01_5 = [[-26.92145949125279,-49.80013314782576],[-26.9179924708142,-49.79576681113736]];
+        var layer_Orto_Decor01_5 = new L.imageOverlay(img_Orto_Decor01_5,
+                                              img_bounds_Orto_Decor01_5,
+                                              {pane: 'pane_Orto_Decor01_5'});
+        bounds_group.addLayer(layer_Orto_Decor01_5);
+        map.addLayer(layer_Orto_Decor01_5);
+        map.createPane('pane_Orto_Decor02_6');
+        map.getPane('pane_Orto_Decor02_6').style.zIndex = 406;
+        var img_Orto_Decor02_6 = 'data/Orto_Decor02_6.png';
+        var img_bounds_Orto_Decor02_6 = [[-26.92488963935485,-49.80009686224309],[-26.921422615184266,-49.7957303881928]];
+        var layer_Orto_Decor02_6 = new L.imageOverlay(img_Orto_Decor02_6,
+                                              img_bounds_Orto_Decor02_6,
+                                              {pane: 'pane_Orto_Decor02_6'});
+        bounds_group.addLayer(layer_Orto_Decor02_6);
+        map.addLayer(layer_Orto_Decor02_6);
+        map.createPane('pane_Orto_Decor03_7');
+        map.getPane('pane_Orto_Decor03_7').style.zIndex = 407;
+        var img_Orto_Decor03_7 = 'data/Orto_Decor03_7.png';
+        var img_bounds_Orto_Decor03_7 = [[-26.92831978574423,-49.80006057018747],[-26.92485275784148,-49.79569395875112]];
+        var layer_Orto_Decor03_7 = new L.imageOverlay(img_Orto_Decor03_7,
+                                              img_bounds_Orto_Decor03_7,
+                                              {pane: 'pane_Orto_Decor03_7'});
+        bounds_group.addLayer(layer_Orto_Decor03_7);
+        map.addLayer(layer_Orto_Decor03_7);
+        map.createPane('pane_Orto_Decor10_8');
+        map.getPane('pane_Orto_Decor10_8').style.zIndex = 408;
+        var img_Orto_Decor10_8 = 'data/Orto_Decor10_8.png';
+        var img_bounds_Orto_Decor10_8 = [[-26.9179924708142,-49.795839637538485],[-26.914526300792097,-49.79158710161358]];
+        var layer_Orto_Decor10_8 = new L.imageOverlay(img_Orto_Decor10_8,
+                                              img_bounds_Orto_Decor10_8,
+                                              {pane: 'pane_Orto_Decor10_8'});
+        bounds_group.addLayer(layer_Orto_Decor10_8);
+        map.addLayer(layer_Orto_Decor10_8);
+        map.createPane('pane_Orto_Decor11_9');
+        map.getPane('pane_Orto_Decor11_9').style.zIndex = 409;
+        var img_Orto_Decor11_9 = 'data/Orto_Decor11_9.png';
+        var img_bounds_Orto_Decor11_9 = [[-26.921422615184266,-49.795803227585644],[-26.917956441554878,-49.79155055773977]];
+        var layer_Orto_Decor11_9 = new L.imageOverlay(img_Orto_Decor11_9,
+                                              img_bounds_Orto_Decor11_9,
+                                              {pane: 'pane_Orto_Decor11_9'});
+        bounds_group.addLayer(layer_Orto_Decor11_9);
+        map.addLayer(layer_Orto_Decor11_9);
+        map.createPane('pane_Orto_Decor12_10');
+        map.getPane('pane_Orto_Decor12_10').style.zIndex = 410;
+        var img_Orto_Decor12_10 = 'data/Orto_Decor12_10.png';
+        var img_bounds_Orto_Decor12_10 = [[-26.92485275784148,-49.79576681113736],[-26.92138658060466,-49.79151400734695]];
+        var layer_Orto_Decor12_10 = new L.imageOverlay(img_Orto_Decor12_10,
+                                              img_bounds_Orto_Decor12_10,
+                                              {pane: 'pane_Orto_Decor12_10'});
+        bounds_group.addLayer(layer_Orto_Decor12_10);
+        map.addLayer(layer_Orto_Decor12_10);
+        map.createPane('pane_Orto_Decor13_11');
+        map.getPane('pane_Orto_Decor13_11').style.zIndex = 411;
+        var img_Orto_Decor13_11 = 'data/Orto_Decor13_11.png';
+        var img_bounds_Orto_Decor13_11 = [[-26.928282898785696,-49.7957303881928],[-26.924816717941287,-49.79147745043428]];
+        var layer_Orto_Decor13_11 = new L.imageOverlay(img_Orto_Decor13_11,
+                                              img_bounds_Orto_Decor13_11,
+                                              {pane: 'pane_Orto_Decor13_11'});
+        bounds_group.addLayer(layer_Orto_Decor13_11);
+        map.addLayer(layer_Orto_Decor13_11);
+        map.createPane('pane_Orto_Decor14_12');
+        map.getPane('pane_Orto_Decor14_12').style.zIndex = 412;
+        var img_Orto_Decor14_12 = 'data/Orto_Decor14_12.png';
+        var img_bounds_Orto_Decor14_12 = [[-26.931713038016767,-49.79569395875112],[-26.92824685356459,-49.7914408870009]];
+        var layer_Orto_Decor14_12 = new L.imageOverlay(img_Orto_Decor14_12,
+                                              img_bounds_Orto_Decor14_12,
+                                              {pane: 'pane_Orto_Decor14_12'});
+        bounds_group.addLayer(layer_Orto_Decor14_12);
+        map.addLayer(layer_Orto_Decor14_12);
+        map.createPane('pane_Orto_Decor15_13');
+        map.getPane('pane_Orto_Decor15_13').style.zIndex = 413;
+        var img_Orto_Decor15_13 = 'data/Orto_Decor15_13.png';
+        var img_bounds_Orto_Decor15_13 = [[-26.935143175534527,-49.79565752281147],[-26.931676987474443,-49.79140431704598]];
+        var layer_Orto_Decor15_13 = new L.imageOverlay(img_Orto_Decor15_13,
+                                              img_bounds_Orto_Decor15_13,
+                                              {pane: 'pane_Orto_Decor15_13'});
+        bounds_group.addLayer(layer_Orto_Decor15_13);
+        map.addLayer(layer_Orto_Decor15_13);
+        map.createPane('pane_Orto_Decor16_14');
+        map.getPane('pane_Orto_Decor16_14').style.zIndex = 414;
+        var img_Orto_Decor16_14 = 'data/Orto_Decor16_14.png';
+        var img_bounds_Orto_Decor16_14 = [[-26.938573311338825,-49.79562108037299],[-26.935107119670672,-49.791367740568646]];
+        var layer_Orto_Decor16_14 = new L.imageOverlay(img_Orto_Decor16_14,
+                                              img_bounds_Orto_Decor16_14,
+                                              {pane: 'pane_Orto_Decor16_14'});
+        bounds_group.addLayer(layer_Orto_Decor16_14);
+        map.addLayer(layer_Orto_Decor16_14);
+        map.createPane('pane_Orto_Decor17_15');
+        map.getPane('pane_Orto_Decor17_15').style.zIndex = 415;
+        var img_Orto_Decor17_15 = 'data/Orto_Decor17_15.png';
+        var img_bounds_Orto_Decor17_15 = [[-26.942003445429513,-49.79558463143484],[-26.938537250153125,-49.79133115756807]];
+        var layer_Orto_Decor17_15 = new L.imageOverlay(img_Orto_Decor17_15,
+                                              img_bounds_Orto_Decor17_15,
+                                              {pane: 'pane_Orto_Decor17_15'});
+        bounds_group.addLayer(layer_Orto_Decor17_15);
+        map.addLayer(layer_Orto_Decor17_15);
+        map.createPane('pane_Orto_Decor18_16');
+        map.getPane('pane_Orto_Decor18_16').style.zIndex = 416;
+        var img_Orto_Decor18_16 = 'data/Orto_Decor18_16.png';
+        var img_bounds_Orto_Decor18_16 = [[-26.944277262320345,-49.79554817599619],[-26.941967378921657,-49.79130690329374]];
+        var layer_Orto_Decor18_16 = new L.imageOverlay(img_Orto_Decor18_16,
+                                              img_bounds_Orto_Decor18_16,
+                                              {pane: 'pane_Orto_Decor18_16'});
+        bounds_group.addLayer(layer_Orto_Decor18_16);
+        map.addLayer(layer_Orto_Decor18_16);
+        map.createPane('pane_Orto_Decorbras_17');
+        map.getPane('pane_Orto_Decorbras_17').style.zIndex = 417;
+        var img_Orto_Decorbras_17 = 'data/Orto_Decorbras_17.png';
+        var img_bounds_Orto_Decorbras_17 = [[-26.944314736746513,-49.800169426936336],[-26.914526299813694,-49.79130678296182]];
+        var layer_Orto_Decorbras_17 = new L.imageOverlay(img_Orto_Decorbras_17,
+                                              img_bounds_Orto_Decorbras_17,
+                                              {pane: 'pane_Orto_Decorbras_17'});
+        bounds_group.addLayer(layer_Orto_Decorbras_17);
+
+        function pop_ImveisdoSicar_18(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_imovel'] !== null ? autolinker.link(String(feature.properties['cod_imovel']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['status_imovel'] !== null ? autolinker.link(String(feature.properties['status_imovel']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dat_criacao'] !== null ? autolinker.link(String(feature.properties['dat_criacao']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area'] !== null ? autolinker.link(String(feature.properties['area']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['condicao'] !== null ? autolinker.link(String(feature.properties['condicao']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['uf'] !== null ? autolinker.link(String(feature.properties['uf']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municipio'] !== null ? autolinker.link(String(feature.properties['municipio']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_municipio_ibge'] !== null ? autolinker.link(String(feature.properties['cod_municipio_ibge']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['m_fiscal'] !== null ? autolinker.link(String(feature.properties['m_fiscal']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['tipo_imovel'] !== null ? autolinker.link(String(feature.properties['tipo_imovel']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ImveisdoSicar_18_0() {
+            return {
+                pane: 'pane_ImveisdoSicar_18',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_ImveisdoSicar_18');
+        map.getPane('pane_ImveisdoSicar_18').style.zIndex = 418;
+        map.getPane('pane_ImveisdoSicar_18').style['mix-blend-mode'] = 'normal';
+        var layer_ImveisdoSicar_18 = new L.geoJson(json_ImveisdoSicar_18, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_ImveisdoSicar_18',
+            layerName: 'layer_ImveisdoSicar_18',
+            pane: 'pane_ImveisdoSicar_18',
+            onEachFeature: pop_ImveisdoSicar_18,
+            style: style_ImveisdoSicar_18_0,
+        });
+        bounds_group.addLayer(layer_ImveisdoSicar_18);
+        map.addLayer(layer_ImveisdoSicar_18);
+        function pop_Curso_d_agua_19(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Faixa APP'] !== null ? autolinker.link(String(feature.properties['Faixa APP']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Curso_d_agua_19_0() {
+            return {
+                pane: 'pane_Curso_d_agua_19',
+                opacity: 1,
+                color: 'rgba(51,58,218,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Curso_d_agua_19');
+        map.getPane('pane_Curso_d_agua_19').style.zIndex = 419;
+        map.getPane('pane_Curso_d_agua_19').style['mix-blend-mode'] = 'normal';
+        var layer_Curso_d_agua_19 = new L.geoJson(json_Curso_d_agua_19, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Curso_d_agua_19',
+            layerName: 'layer_Curso_d_agua_19',
+            pane: 'pane_Curso_d_agua_19',
+            onEachFeature: pop_Curso_d_agua_19,
+            style: style_Curso_d_agua_19_0,
+        });
+        bounds_group.addLayer(layer_Curso_d_agua_19);
+        function pop_Aude_20(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Aude_20_0() {
+            return {
+                pane: 'pane_Aude_20',
+                opacity: 1,
+                color: 'rgba(38,89,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(29,205,206,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Aude_20');
+        map.getPane('pane_Aude_20').style.zIndex = 420;
+        map.getPane('pane_Aude_20').style['mix-blend-mode'] = 'normal';
+        var layer_Aude_20 = new L.geoJson(json_Aude_20, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Aude_20',
+            layerName: 'layer_Aude_20',
+            pane: 'pane_Aude_20',
+            onEachFeature: pop_Aude_20,
+            style: style_Aude_20_0,
+        });
+        bounds_group.addLayer(layer_Aude_20);
+        function pop_Banhado_21(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Banhado_21_0() {
+            return {
+                pane: 'pane_Banhado_21',
+                opacity: 1,
+                color: 'rgba(38,89,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(55,126,184,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Banhado_21');
+        map.getPane('pane_Banhado_21').style.zIndex = 421;
+        map.getPane('pane_Banhado_21').style['mix-blend-mode'] = 'normal';
+        var layer_Banhado_21 = new L.geoJson(json_Banhado_21, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Banhado_21',
+            layerName: 'layer_Banhado_21',
+            pane: 'pane_Banhado_21',
+            onEachFeature: pop_Banhado_21,
+            style: style_Banhado_21_0,
+        });
+        bounds_group.addLayer(layer_Banhado_21);
+        function pop_APP_22(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Faixa APP'] !== null ? autolinker.link(String(feature.properties['Faixa APP']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_APP_22_0() {
+            return {
+                pane: 'pane_APP_22',
+                opacity: 1,
+                color: 'rgba(38,89,128,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(55,126,184,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_APP_22');
+        map.getPane('pane_APP_22').style.zIndex = 422;
+        map.getPane('pane_APP_22').style['mix-blend-mode'] = 'normal';
+        var layer_APP_22 = new L.geoJson(json_APP_22, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_APP_22',
+            layerName: 'layer_APP_22',
+            pane: 'pane_APP_22',
+            onEachFeature: pop_APP_22,
+            style: style_APP_22_0,
+        });
+        bounds_group.addLayer(layer_APP_22);
+        function pop_Vegetao_23(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Vegetao_23_0() {
+            return {
+                pane: 'pane_Vegetao_23',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Vegetao_23');
+        map.getPane('pane_Vegetao_23').style.zIndex = 423;
+        map.getPane('pane_Vegetao_23').style['mix-blend-mode'] = 'normal';
+        var layer_Vegetao_23 = new L.geoJson(json_Vegetao_23, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Vegetao_23',
+            layerName: 'layer_Vegetao_23',
+            pane: 'pane_Vegetao_23',
+            onEachFeature: pop_Vegetao_23,
+            style: style_Vegetao_23_0,
+        });
+        bounds_group.addLayer(layer_Vegetao_23);
+        function pop_Estradas_24(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tipo_Via'] !== null ? autolinker.link(String(feature.properties['Tipo_Via']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Meia_Largura'] !== null ? autolinker.link(String(feature.properties['Meia_Largura']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Estradas_24_0() {
+            return {
+                pane: 'pane_Estradas_24',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Estradas_24');
+        map.getPane('pane_Estradas_24').style.zIndex = 424;
+        map.getPane('pane_Estradas_24').style['mix-blend-mode'] = 'normal';
+        var layer_Estradas_24 = new L.geoJson(json_Estradas_24, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Estradas_24',
+            layerName: 'layer_Estradas_24',
+            pane: 'pane_Estradas_24',
+            onEachFeature: pop_Estradas_24,
+            style: style_Estradas_24_0,
+        });
+        bounds_group.addLayer(layer_Estradas_24);
+        function pop_Benfeitorias_25(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Benfeitorias_25_0() {
+            return {
+                pane: 'pane_Benfeitorias_25',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Benfeitorias_25');
+        map.getPane('pane_Benfeitorias_25').style.zIndex = 425;
+        map.getPane('pane_Benfeitorias_25').style['mix-blend-mode'] = 'normal';
+        var layer_Benfeitorias_25 = new L.geoJson(json_Benfeitorias_25, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Benfeitorias_25',
+            layerName: 'layer_Benfeitorias_25',
+            pane: 'pane_Benfeitorias_25',
+            onEachFeature: pop_Benfeitorias_25,
+            style: style_Benfeitorias_25_0,
+        });
+        bounds_group.addLayer(layer_Benfeitorias_25);
+        function pop_Talhes_26(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_TALHAO'] !== null ? autolinker.link(String(feature.properties['ID_TALHAO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COD_FAZENDA'] !== null ? autolinker.link(String(feature.properties['COD_FAZENDA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COD_TALHAO'] !== null ? autolinker.link(String(feature.properties['COD_TALHAO']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(String(feature.properties['ID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area_ha'] !== null ? autolinker.link(String(feature.properties['area_ha']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['soma_area'] !== null ? autolinker.link(String(feature.properties['soma_area']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Talhes_26_0() {
+            return {
+                pane: 'pane_Talhes_26',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Talhes_26');
+        map.getPane('pane_Talhes_26').style.zIndex = 426;
+        map.getPane('pane_Talhes_26').style['mix-blend-mode'] = 'normal';
+        var layer_Talhes_26 = new L.geoJson(json_Talhes_26, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Talhes_26',
+            layerName: 'layer_Talhes_26',
+            pane: 'pane_Talhes_26',
+            onEachFeature: pop_Talhes_26,
+            style: style_Talhes_26_0,
+        });
+        bounds_group.addLayer(layer_Talhes_26);
+        map.addLayer(layer_Talhes_26);
+        var overlaysTree = [
+        {label: '<b>Talhões</b>', collapsed: true, selectAllCheckbox: true, children: [
+            {label: '<img src="legend/Talhes_26.png" /> Talhões', layer: layer_Talhes_26},]},
+        {label: '<b>Uso do Solo</b>', collapsed: true, selectAllCheckbox: true, children: [
+            {label: '<img src="legend/Benfeitorias_25.png" /> Benfeitorias', layer: layer_Benfeitorias_25},
+            {label: '<img src="legend/Estradas_24.png" /> Estradas', layer: layer_Estradas_24},
+            {label: '<img src="legend/Vegetao_23.png" /> Vegetação', layer: layer_Vegetao_23},]},
+        {label: '<b>Hidrografia</b>', collapsed: true, selectAllCheckbox: true, children: [
+            {label: '<img src="legend/APP_22.png" /> APP', layer: layer_APP_22},
+            {label: '<img src="legend/Banhado_21.png" /> Banhado', layer: layer_Banhado_21},
+            {label: '<img src="legend/Aude_20.png" /> Açude', layer: layer_Aude_20},
+            {label: '<img src="legend/Curso_d_agua_19.png" /> Curso_d_agua', layer: layer_Curso_d_agua_19},]},
+            {label: '<img src="legend/ImveisdoSicar_18.png" /> Imóveis do Sicar', layer: layer_ImveisdoSicar_18},
+            {label: "Orto_Decorbras", layer: layer_Orto_Decorbras_17},
+        {label: '<b>Ortomosaico Fotogramétrico</b>', collapsed: true, selectAllCheckbox: true, children: [
+            {label: "Orto_Decor-1-8", layer: layer_Orto_Decor18_16},
+            {label: "Orto_Decor-1-7", layer: layer_Orto_Decor17_15},
+            {label: "Orto_Decor-1-6", layer: layer_Orto_Decor16_14},
+            {label: "Orto_Decor-1-5", layer: layer_Orto_Decor15_13},
+            {label: "Orto_Decor-1-4", layer: layer_Orto_Decor14_12},
+            {label: "Orto_Decor-1-3", layer: layer_Orto_Decor13_11},
+            {label: "Orto_Decor-1-2", layer: layer_Orto_Decor12_10},
+            {label: "Orto_Decor-1-1", layer: layer_Orto_Decor11_9},
+            {label: "Orto_Decor-1-0", layer: layer_Orto_Decor10_8},
+            {label: "Orto_Decor-0-3", layer: layer_Orto_Decor03_7},
+            {label: "Orto_Decor-0-2", layer: layer_Orto_Decor02_6},
+            {label: "Orto_Decor-0-1", layer: layer_Orto_Decor01_5},
+            {label: "Orto_Decor-0-0", layer: layer_Orto_Decor00_4},]},
+        {label: '<b>Base de Mapas</b>', collapsed: true, selectAllCheckbox: true, children: [
+            {label: "MDS_Talhoes", layer: layer_MDS_Talhoes_3},
+            {label: "Google Satellite", layer: layer_GoogleSatellite_2, radioGroup: 'bm' },
+            {label: "Google Road", layer: layer_GoogleRoad_1, radioGroup: 'bm' },
+            {label: "OpenTopoMap", layer: layer_OpenTopoMap_0, radioGroup: 'bm' },]},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        
+// Remove popups nativos do qgis2web: informações são exibidas apenas na torre direita.
+try{map.closePopup();map.eachLayer(function(lyr){if(lyr&&typeof lyr.unbindPopup==='function')lyr.unbindPopup();if(lyr&&typeof lyr.eachLayer==='function')lyr.eachLayer(function(sl){if(sl&&typeof sl.unbindPopup==='function')sl.unbindPopup();});});}catch(e){}
+
+// ===== EcoMap Dashboard V3 =====
+(function(){
+ const TODAY=new Date('2026-09-19T12:00:00');
+ const orthoLayers=[layer_Orto_Decor00_4,layer_Orto_Decor01_5,layer_Orto_Decor02_6,layer_Orto_Decor03_7,layer_Orto_Decor10_8,layer_Orto_Decor11_9,layer_Orto_Decor12_10,layer_Orto_Decor13_11,layer_Orto_Decor14_12,layer_Orto_Decor15_13,layer_Orto_Decor16_14,layer_Orto_Decor17_15,layer_Orto_Decor18_16];
+ try{map.removeLayer(layer_Orto_Decorbras_17)}catch(e){}
+ const groups={talhoes:[layer_Talhes_26],uso:[layer_Vegetao_23,layer_Estradas_24,layer_Benfeitorias_25],hidro:[layer_Curso_d_agua_19,layer_Aude_20,layer_Banhado_21,layer_APP_22],sicar:[layer_ImveisdoSicar_18],orto:orthoLayers,mds:[layer_MDS_Talhoes_3]};
+ // Transparência visual uniforme de 50% para Uso do Solo e Hidrografia.
+ ['pane_Vegetao_23','pane_Estradas_24','pane_Benfeitorias_25','pane_Curso_d_agua_19','pane_Aude_20','pane_Banhado_21','pane_APP_22'].forEach(function(n){try{const pn=map.getPane(n);if(pn)pn.style.opacity='0.5';}catch(e){}});
+ function toggleGroup(name,on){(groups[name]||[]).forEach(l=>{if(on){if(!map.hasLayer(l))map.addLayer(l)}else if(map.hasLayer(l))map.removeLayer(l)});}
+ document.querySelectorAll('.theme').forEach(el=>{toggleGroup(el.dataset.theme,el.checked);el.addEventListener('change',()=>toggleGroup(el.dataset.theme,el.checked));});
+ const bases={sat:layer_GoogleSatellite_2,road:layer_GoogleRoad_1,topo:layer_OpenTopoMap_0};
+ function setBase(k){Object.values(bases).forEach(l=>map.hasLayer(l)&&map.removeLayer(l)); if(k!=='none'&&bases[k])map.addLayer(bases[k]);}
+ document.querySelectorAll('input[name=base]').forEach(r=>r.addEventListener('change',()=>setBase(r.value))); setBase('sat');
+ L.control.scale({imperial:false,metric:true,position:'bottomleft',maxWidth:140}).addTo(map);
+ setInterval(()=>document.getElementById('clock').textContent=new Date().toLocaleString('pt-BR'),1000);
+ const talhaoMeta={}; (window.json_Talhes_26&&json_Talhes_26.features||[]).forEach(f=>talhaoMeta[f.properties.ID_TALHAO]=f.properties);
+ let selected=null,currentOp='';
+ function opRow(id){return currentOp&&window.DEMO_OPERATIONS&&DEMO_OPERATIONS[currentOp]?DEMO_OPERATIONS[currentOp].find(x=>x.id===id):null}
+ function statusClass(s){return 'status-'+String(s||'SEM').split(' ')[0]}
+ function showInfo(id){selected=id;const p=talhaoMeta[id]||{};const r=opRow(id);document.getElementById('talhaoInfo').innerHTML=`<div style="font-size:18px;font-weight:900">${id}</div><div class="info-grid"><div class="info-card"><small>Área</small><b>${Number(p.area_ha||0).toLocaleString('pt-BR',{minimumFractionDigits:3})} ha</b></div><div class="info-card"><small>Fazenda</small><b>Centro</b></div><div class="info-card"><small>Operação</small><b>${currentOp||'—'}</b></div><div class="info-card"><small>Status</small><span class="statuspill ${statusClass(r&&r.status)}">${r?r.status:'—'}</span></div></div>${r?`<div class="info-grid"><div class="info-card"><small>Prevista</small><b>${r.prevista?new Date(r.prevista+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</b></div><div class="info-card"><small>Realizada</small><b>${r.realizada?new Date(r.realizada+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</b></div></div>`:''}`;}
+ const labels=[];
+ layer_Talhes_26.eachLayer(function(l){const id=l.feature&&l.feature.properties.ID_TALHAO;if(!id)return;l.options.interactive=true;if(l._path)l._path.style.pointerEvents='auto';l.on('click',(ev)=>{try{L.DomEvent.stopPropagation(ev)}catch(e){};try{map.closePopup()}catch(e){};showInfo(id)});l.bindTooltip(id,{permanent:true,direction:'center',className:'talhao-label',interactive:true});l.on('tooltipopen',e=>{const el=e.tooltip.getElement();if(el){el.style.pointerEvents='auto';el.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();try{map.closePopup()}catch(e){};showInfo(id)}}});labels.push({id,l});});
+ function applyStatus(){const rows=currentOp&&DEMO_OPERATIONS[currentOp]||[];const by=Object.fromEntries(rows.map(x=>[x.id,x]));labels.forEach(({id,l})=>{const r=by[id];let fill='#6ea97f',fo=.5,cls='talhao-label';if(r&&r.status==='ATRASADO'){fill='#d83a3a';fo=.72;cls+=' alert-red'}else if(r&&r.status==='PRÓXIMO'){fill='#f0bd2d';fo=.72;cls+=' alert-yellow'}else if(r&&r.status==='CONCLUÍDO'){fill='#42a66a';fo=.55}else if(r&&r.status==='PROGRAMADO'){fill='#4f83bd';fo=.48}else{fill='#8ea69a';fo=.35}try{l.setStyle({fillColor:fill,fillOpacity:fo,opacity:.65,weight:1.2})}catch(e){}try{const t=l.getTooltip();if(t)t.options.className=cls;if(t&&t.getElement())t.getElement().className='leaflet-tooltip leaflet-zoom-animated leaflet-tooltip-center '+cls}catch(e){}}); updateTicker(rows); if(selected)showInfo(selected);}
+ function updateTicker(rows){if(!currentOp){document.getElementById('tickerText').textContent='Selecione uma operação para visualizar os alertas operacionais dos talhões.';return}const late=rows.filter(x=>x.status==='ATRASADO'),soon=rows.filter(x=>x.status==='PRÓXIMO');let parts=[];if(late.length)parts.push(`⚠ ${currentOp}: ${late.length} talhão(ões) em atraso — ${late.map(x=>x.id).join(', ')}`);if(soon.length)parts.push(`● ${soon.length} operação(ões) previstas para os próximos 30 dias — ${soon.map(x=>x.id).join(', ')}`);document.getElementById('tickerText').textContent=parts.join('     •     ')||`${currentOp}: sem alertas críticos no momento.`}
+ document.getElementById('operation').addEventListener('change',e=>{currentOp=e.target.value;applyStatus()});applyStatus();
+ document.getElementById('searchTalhao').addEventListener('change',e=>{const q=e.target.value.trim().toUpperCase();const hit=labels.find(x=>x.id===q||x.id.endsWith('_'+q));if(hit){map.fitBounds(hit.l.getBounds(),{maxZoom:18});showInfo(hit.id)}});
+ // Botão principal de medições: expande/recolhe as três ferramentas.
+ const measureTools=document.getElementById('measureTools'),measureMain=document.getElementById('measureMain');
+ measureMain.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();measureTools.classList.toggle('open');measureMain.classList.toggle('active',measureTools.classList.contains('open'));};
+ // Reenquadrar fazenda (controle Home), separado de zoom/geolocalização.
+ const HomeControl=L.Control.extend({options:{position:'topleft'},onAdd:function(){const c=L.DomUtil.create('div','leaflet-bar leaflet-control');const a=L.DomUtil.create('a','',c);a.href='#';a.title='Reenquadrar fazenda';a.innerHTML='⌂';a.style.fontSize='22px';a.style.textAlign='center';L.DomEvent.disableClickPropagation(c);L.DomEvent.on(a,'click',function(e){L.DomEvent.stop(e);try{if(bounds_group&&bounds_group.getBounds().isValid())map.fitBounds(bounds_group.getBounds(),{padding:[20,20]});else map.fitBounds(layer_Talhes_26.getBounds(),{padding:[20,20]});}catch(err){}});return c;}});
+ map.addControl(new HomeControl());
+ // Drawing / measurement
+ map.createPane('measurePane');map.getPane('measurePane').style.zIndex=1000;let mode=null,pts=[],temp=null,seq=0;const finished=L.featureGroup().addTo(map);const records=[];
+ function fmtDist(m){return m>=1000?(m/1000).toFixed(3).replace('.',',')+' km':m.toFixed(2).replace('.',',')+' m'}
+ function areaGeo(ps){if(ps.length<3)return 0;let a=0,R=6378137;for(let i=0;i<ps.length;i++){let p1=ps[i],p2=ps[(i+1)%ps.length];a+=(p2.lng-p1.lng)*Math.PI/180*(2+Math.sin(p1.lat*Math.PI/180)+Math.sin(p2.lat*Math.PI/180));}return Math.abs(a*R*R/2)}
+ function start(m){mode=m;pts=[];if(temp){map.removeLayer(temp);temp=null}document.querySelectorAll('.maptools button').forEach(b=>b.classList.remove('active'));document.getElementById(m==='point'?'toolPoint':m==='line'?'toolLine':'toolPoly').classList.add('active');document.getElementById('drawmode').textContent=m==='point'?'Marcar ponto':m==='line'?'Desenhar caminho':'Desenhar área';document.getElementById('drawbar').classList.add('show');map.getContainer().style.cursor='crosshair'}
+ function cancel(){mode=null;pts=[];if(temp){map.removeLayer(temp);temp=null}document.querySelectorAll('.maptools button').forEach(b=>b.classList.remove('active'));document.getElementById('drawbar').classList.remove('show');map.getContainer().style.cursor='';measureTools.classList.remove('open');measureMain.classList.remove('active')}
+ ['toolPoint','toolLine','toolPoly'].forEach((id,i)=>document.getElementById(id).onclick=()=>start(['point','line','poly'][i]));document.getElementById('cancelDraw').onclick=cancel;
+ map.on('click',e=>{if(!mode)return;if(mode==='point'){pts=[e.latlng];if(temp)map.removeLayer(temp);temp=L.circleMarker(e.latlng,{pane:'measurePane',radius:6,color:'#111',fillColor:'#fff',fillOpacity:1,weight:2}).addTo(map);return}pts.push(e.latlng);if(temp)map.removeLayer(temp);temp=(mode==='line'?L.polyline(pts,{pane:'measurePane',color:'#17231d',weight:4}):L.polygon(pts,{pane:'measurePane',color:'#17231d',weight:3,fillColor:'#2f765a',fillOpacity:.18})).addTo(map)});
+ function refreshTable(){const tb=document.querySelector('#measureTable tbody');tb.innerHTML=records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.type}</td><td>${r.info}</td><td><button data-del="${i}">×</button></td></tr>`).join('');tb.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.del;finished.removeLayer(records[i].layer);records.splice(i,1);refreshTable()})}
+ document.getElementById('finishDraw').onclick=()=>{if(!mode||!pts.length)return;if(mode==='line'&&pts.length<2)return alert('Adicione pelo menos 2 pontos.');if(mode==='poly'&&pts.length<3)return alert('Adicione pelo menos 3 pontos.');let layer,info,type;if(mode==='point'){layer=L.circleMarker(pts[0],{radius:6,color:'#173d2e',fillColor:'#2f765a',fillOpacity:1});type='Ponto';info=`${pts[0].lat.toFixed(6)}, ${pts[0].lng.toFixed(6)}`}else if(mode==='line'){layer=L.polyline(pts,{color:'#173d2e',weight:4});let d=0;for(let i=1;i<pts.length;i++)d+=map.distance(pts[i-1],pts[i]);type='Caminho';info=fmtDist(d)}else{layer=L.polygon(pts,{color:'#173d2e',weight:3,fillColor:'#2f765a',fillOpacity:.18});type='Área';let a=areaGeo(pts);info=(a/10000).toFixed(4).replace('.',',')+' ha'}if(temp){map.removeLayer(temp);temp=null}finished.addLayer(layer);records.push({type,info,layer});refreshTable();cancel()};
+ document.getElementById('clearVectors').onclick=()=>{if(confirm('Limpar todas as medições finalizadas?')){finished.clearLayers();records.length=0;refreshTable()}};
+ document.getElementById('exportGeoJSON').onclick=()=>{if(!records.length)return alert('Não há vetores finalizados.');const gj=finished.toGeoJSON();gj.features.forEach((f,i)=>Object.assign(f.properties,{tipo:records[i].type,medicao:records[i].info}));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(gj,null,2)],{type:'application/geo+json'}));a.download='medicoes_decorbras.geojson';a.click()};
+ document.getElementById('exportCSV').onclick=()=>{const op=currentOp||'Plantio',rows=DEMO_OPERATIONS[op]||[];let csv='ID_TALHAO;STATUS;DATA_PREVISTA;DATA_REALIZADA;AREA_HA\n'+rows.map(r=>[r.id,r.status,r.prevista||'',r.realizada||'',String(r.area).replace('.',',')].join(';')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`${op}_Decorbras.csv`;a.click()};document.getElementById('printReport').onclick=()=>window.print();
+})();
+</script>        
+    
+<script>
+document.getElementById('logoutBtn').addEventListener('click', function(){
+  sessionStorage.removeItem('decorbras_auth');
+  window.location.replace('login.html');
+});
+</script>
+</body>
+</html>

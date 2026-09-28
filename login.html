@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decorbras | WebGIS Florestal</title>
+<style>
+:root{--brand:#9f1111;--brand-dark:#710808;--text:#281b1b;--muted:#756765;--line:#dfd5d2}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text)}
+body{display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#faf8f7,#eee8e6);border-top:5px solid var(--brand)}
+.card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px;box-shadow:0 20px 60px rgba(72,14,17,.14)}
+.logo{display:block;width:min(300px,90%);max-height:92px;object-fit:contain;margin:0 auto 22px}
+.heading{text-align:center;margin-bottom:27px}.heading h1{margin:0 0 6px;font-size:21px;letter-spacing:.09em}.heading p{margin:0;color:var(--muted);font-size:13px}
+.field{margin-bottom:15px}label{display:block;margin-bottom:6px;color:var(--brand-dark);font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+input{width:100%;padding:12px 13px;border:1px solid #d6cac7;border-radius:9px;font-size:15px;outline:none}input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(159,17,17,.09)}
+.password{position:relative}.password input{padding-right:65px}.eye{position:absolute;right:7px;top:6px;height:34px;border:0;background:transparent;cursor:pointer;color:#6f6260;font-weight:700}
+.submit{width:100%;border:0;border-radius:9px;padding:12px;background:var(--brand);color:#fff;font-weight:800;font-size:14px;cursor:pointer}.submit:hover{background:var(--brand-dark)}
+.error{min-height:20px;text-align:center;color:#b21d24;font-size:12px;margin-top:10px}.footer{text-align:center;color:#8b7d7a;font-size:11px;margin-top:18px}
+
+.remember-row{display:flex;align-items:center;gap:8px;margin:-2px 0 16px;color:#625654;font-size:13px}
+.remember-row input{width:16px;height:16px;margin:0;accent-color:var(--brand)}
+.remember-row label{margin:0;text-transform:none;letter-spacing:0;color:#625654;font-size:13px;font-weight:600;cursor:pointer}
+
+</style>
+</head>
+<body>
+<main class="card">
+<img class="logo" src="images/logo_decorbras.png" alt="Decorbras">
+<div class="heading"><h1>WEBGIS FLORESTAL</h1><p>Gestão operacional e geoespacial</p></div>
+<form id="loginForm">
+<div class="field"><label for="usuario">Usuário</label><input id="usuario" autocomplete="username" required autofocus></div>
+<div class="field"><label for="senha">Senha</label><div class="password"><input id="senha" type="password" autocomplete="current-password" required><button class="eye" id="toggle" type="button">Mostrar</button></div></div>
+ <div class="remember-row"><input id="lembrarSenha" type="checkbox"><label for="lembrarSenha">Lembrar usuário e senha neste dispositivo</label></div>
+<button class="submit" type="submit">ENTRAR</button><div class="error" id="erro"></div>
+</form>
+<div class="footer">EcoMap • Portal Decorbras</div>
+</main>
+<script>
+// Barreira de frontend para protótipo; não substitui autenticação de servidor.
+const ACCESS_USER='decorbras2026';
+const ACCESS_PASS_HASH='86e86c847dc37c5fa7f20998c1f37cf493bebc098362af9c02f3d987da35c706';
+if(sessionStorage.getItem('decorbras_auth')==='ok') window.location.replace('index.html');
+document.getElementById('toggle').addEventListener('click',function(){const s=document.getElementById('senha');const show=s.type==='password';s.type=show?'text':'password';this.textContent=show?'Ocultar':'Mostrar';});
+const REMEMBER_KEY='decorbras_saved_login';
+
+async function sha256(value){
+  const data=new TextEncoder().encode(value);
+  const digest=await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+try{
+  const saved=JSON.parse(localStorage.getItem(REMEMBER_KEY)||'null');
+  if(saved){
+    document.getElementById('usuario').value=saved.user||'';
+    document.getElementById('senha').value=saved.pass||'';
+    document.getElementById('lembrarSenha').checked=true;
+  }
+}catch(e){}
+
+document.getElementById('loginForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const u=document.getElementById('usuario').value.trim();
+  const p=document.getElementById('senha').value;
+  const pHash=await sha256(p);
+
+  if(u===ACCESS_USER && pHash===ACCESS_PASS_HASH){
+    if(document.getElementById('lembrarSenha').checked){
+      localStorage.setItem(REMEMBER_KEY,JSON.stringify({user:u,pass:p}));
+    }else{
+      localStorage.removeItem(REMEMBER_KEY);
+    }
+    sessionStorage.setItem('decorbras_auth','ok');
+    window.location.replace('index.html');
+  }else{
+    document.getElementById('erro').textContent='Usuário ou senha inválidos.';
+  }
+});
+</script>
+</body>
+</html>
