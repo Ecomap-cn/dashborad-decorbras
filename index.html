@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +29,10 @@
 .maparea{grid-area:map;position:relative;min-width:0;min-height:0;background:#e9e5e3}#map{width:100%;height:100%;background:#e9e5e3}.leaflet-control-layers{display:none!important}.leaflet-control-attribution{display:none!important}.north{position:absolute;right:14px;top:14px;z-index:900;background:#fff;border-radius:10px;padding:8px 11px;box-shadow:0 2px 10px #0002;text-align:center;font-size:22px}.north small{display:block;font-size:10px}.mapstats{position:absolute;left:12px;bottom:28px;z-index:900;background:#fff;border-radius:8px;padding:6px 9px;font-size:11px;box-shadow:0 2px 8px #0002}.maptools{position:absolute;left:58px;top:12px;z-index:1000;display:flex;flex-direction:column;gap:5px}.maptools button{width:38px;height:38px;border:1px solid #ccd8d2;background:#fff;border-radius:8px;font-size:17px;box-shadow:0 2px 8px #0002;cursor:pointer}.maptools button.active,.maptools button:hover{background:var(--green);color:#fff}.measure-subtools{display:none;flex-direction:column;gap:5px}.maptools.open .measure-subtools{display:flex}.drawbar{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:22px;z-index:1100;background:#17231de8;color:#fff;padding:8px 10px;border-radius:12px;gap:8px;align-items:center}.drawbar.show{display:flex}.drawbar button{border:0;border-radius:7px;padding:6px 9px}.ticker{grid-area:ticker;background:#3a1717;color:#fff;display:flex;align-items:center;overflow:hidden;z-index:2100}.ticker>b{height:100%;display:flex;align-items:center;padding:0 18px;background:var(--brand);font-size:12px;letter-spacing:.08em}.ticker-window{overflow:hidden;white-space:nowrap;flex:1}.ticker-window>div{display:inline-block;padding-left:100%;animation:ticker 32s linear infinite;font-size:13px}@keyframes ticker{to{transform:translateX(-100%)}}
 .legend{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;margin-top:5px}.legend span{display:flex;align-items:center;gap:4px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.red{background:var(--danger)}.yellow{background:var(--warn)}.green{background:#2e9d62}.empty,.measure-help{font-size:12px;color:var(--muted);line-height:1.45}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.info-card{background:#f5f8f6;border-radius:8px;padding:8px}.info-card small{display:block;color:var(--muted);font-size:10px}.info-card b{font-size:13px}.statuspill{display:inline-block;border-radius:99px;padding:4px 8px;font-size:10px;font-weight:800}.status-ATRASADO{background:#fde4e4;color:#a82020}.status-PRÓXIMO{background:#fff2cc;color:#966900}.status-CONCLUÍDO{background:#dff3e7;color:#216d43}.status-PROGRAMADO{background:#e5edf7;color:#365d8a}.status-SEM{background:#eee;color:#666}.talhao-label{background:rgba(255,255,255,.9);border:1px solid #31463c;border-radius:5px;color:#15241d;font-weight:800;font-size:10px;padding:2px 5px;box-shadow:0 1px 3px #0003}.talhao-label.alert-red{background:#c92f2f;color:#fff;border-color:#8e1717}.talhao-label.alert-yellow{background:#f2c037;color:#332600;border-color:#a97800}.talhao-label.alert-red:before{content:'⚠ '}.talhao-label.alert-yellow:before{content:'● '}.tablewrap{max-height:245px;overflow:auto;margin:8px 0}table{width:100%;border-collapse:collapse;font-size:11px}th,td{padding:6px 4px;border-bottom:1px solid #e6ece9;text-align:left}td button{border:0;background:#f7e7e7;color:#a22;border-radius:5px;cursor:pointer}.leaflet-control-scale{margin-left:12px!important;margin-bottom:8px!important}.leaflet-control-scale-line{background:#ffffffd9!important}
 @media(max-width:1050px){#app{grid-template-columns:250px 1fr;grid-template-areas:'top top' 'left map' 'ticker ticker'}.rightbar{position:absolute;right:0;top:64px;bottom:38px;width:310px;z-index:1500;box-shadow:-4px 0 15px #0002}} 
-</style>
+
+.info-switch{display:flex;gap:5px;background:#eadfdb;border-radius:9px;padding:4px;margin-bottom:12px}.info-switch button{flex:1;border:0;border-radius:7px;padding:9px 5px;background:transparent;color:var(--brand-dark);font-weight:700;cursor:pointer}.info-switch button.active{background:#fff;box-shadow:0 1px 4px #0002}.plot-title{font-size:18px;font-weight:900}.count-note{font-size:11px;color:var(--muted);line-height:1.5;margin:9px 0}.count-toggle{margin-top:12px;background:#fff;border:1px solid #dfd5d2;border-radius:8px;padding:10px!important}.general-table-wrap{max-height:440px;overflow:auto;margin-top:12px;border:1px solid #dfd5d2;border-radius:8px}.general-table{min-width:620px}.general-table th{background:#f1e6e2;position:sticky;top:0;z-index:2;font-size:10px;line-height:1.4}.general-table td:not(:first-child){text-align:right;white-space:nowrap}.general-table tr:nth-child(even){background:#fff}.general-table .plot-link{background:transparent;color:var(--brand);font-weight:700;padding:5px 2px;white-space:nowrap}.general-table td:first-child{position:sticky;left:0;background:#faf7f5}.general-table th:first-child{left:0;z-index:3}.info-card b{overflow-wrap:anywhere}@media(min-width:1250px){#app.general-mode{grid-template-columns:285px minmax(420px,1fr) 500px}}@media print{.leftbar,.topbar,.ticker,.maptools,.north,#drawbar,.rightbar section:last-child,.info-switch{display:none!important}#app{height:auto;display:block}.maparea{height:500px}.rightbar{position:static;width:100%;box-shadow:none}.general-table-wrap{max-height:none;overflow:visible}.general-table{min-width:0}.count-toggle{display:none!important}}
+.general-table tfoot td{font-weight:800;background:#eadfdb;border-top:2px solid #9f1111;position:sticky;bottom:0;z-index:2}.general-table tfoot td:first-child{background:#eadfdb;z-index:3}
+.general-table th,.general-table td,.general-table td:not(:first-child){text-align:center!important}.relief-legend-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:12px}.relief-legend-row i{display:block;width:24px;height:18px;border:1px solid #0002}.relief-contour-label{background:none;border:none;pointer-events:none}.relief-contour-label span{display:block;text-align:center;white-space:nowrap;line-height:28px;font-family:"Open Sans",Arial,sans-serif;font-size:13.33px;font-weight:700;color:#fff;-webkit-text-stroke:7.56px #000;paint-order:stroke fill}</style>
         <title></title>
     </head>
     <body>
@@ -43,12 +46,12 @@ if (sessionStorage.getItem('decorbras_auth') !== 'ok') {
 <aside class="sidebar leftbar">
   <section><h3>Fazenda</h3><select id="farmSelect"><option>Centro — CT</option></select><input id="searchTalhao" placeholder="Buscar talhão (ex.: CT_T001)"></section>
   <section><h3>Base Maps</h3><label><input type="radio" name="base" value="sat" checked><span>Google Satellite</span></label><label><input type="radio" name="base" value="road"><span>Google Road</span></label><label><input type="radio" name="base" value="topo"><span>OpenTopoMap</span></label><label><input type="radio" name="base" value="none"><span>Nenhum</span></label></section>
-  <section><h3>Mapas Temáticos</h3><label><input class="theme" type="checkbox" data-theme="talhoes" checked><span>Talhões</span></label><label><input class="theme" type="checkbox" data-theme="uso"><span>Uso do Solo</span></label><label><input class="theme" type="checkbox" data-theme="hidro"><span>Hidrografia</span></label><label><input class="theme" type="checkbox" data-theme="sicar" checked><span>Imóveis do SICAR</span></label><label><input class="theme" type="checkbox" data-theme="orto" checked><span>Ortomosaico Fotogramétrico</span></label><label><input class="theme" type="checkbox" data-theme="mds"><span>MDS</span></label></section>
-  <section><h3>Setor / Operação</h3><select id="operation"><option value="">Visão geral</option><option>Plantio</option><option>Replantio</option><option>Formicida</option><option>Herbicida</option><option value="Rocada">Roçada</option><option value="Adubacao">Adubação</option><option>Poda</option><option>Desbaste</option><option>Inventario</option><option>Colheita</option><option>Ocorrencias</option></select><div class="legend"><span><i class="dot red"></i>Atrasado</span><span><i class="dot yellow"></i>≤ 30 dias</span><span><i class="dot green"></i>Concluído</span></div></section>
+  <section><h3>Mapas Temáticos</h3><label><input class="theme" type="checkbox" data-theme="talhoes" checked><span>Talhões</span></label><label><input class="theme" type="checkbox" data-theme="uso"><span>Uso do Solo</span></label><label><input class="theme" type="checkbox" data-theme="hidro"><span>Hidrografia</span></label><label><input class="theme" type="checkbox" data-theme="sicar" checked><span>Imóveis do SICAR</span></label><label><input class="theme" type="checkbox" data-theme="orto" checked><span>Ortomosaico Fotogramétrico</span></label><label><input class="terrain-choice" type="checkbox" data-terrain="hipsometrico"><span>Hipsométrico</span></label><label><input class="terrain-choice" type="checkbox" data-terrain="declividade"><span>Declividade</span></label></section>
+  <section><h3>Setor / Operação</h3><select id="operation"><option value="">Visão geral</option><option>Plantio</option><option>Colheita</option></select><div class="legend"><span><i class="dot red"></i>Atrasado</span><span><i class="dot yellow"></i>≤ 30 dias</span><span><i class="dot green"></i>Concluído</span></div></section>
   <section><h3>Relatórios</h3><button class="btn" id="exportCSV">Exportar dados (CSV)</button><button class="btn ghost" id="printReport">Gerar relatório / PDF</button></section>
 </aside>
 <main class="maparea"><div id="map"></div><div class="maptools" id="measureTools"><button id="measureMain" title="Medições" aria-label="Medições">📐</button><div class="measure-subtools"><button id="toolPoint" title="Marcar ponto">●</button><button id="toolLine" title="Medir caminho">⌁</button><button id="toolPoly" title="Medir área">⬠</button></div></div><div id="drawbar" class="drawbar"><b id="drawmode">Desenho</b><button id="finishDraw">Finalizar</button><button id="cancelDraw">Cancelar</button></div><div class="north">▲<small>N</small></div><div class="mapstats"><b id="talhaoCount">19</b> talhões · <b>41,37 ha</b></div></main>
-<aside class="sidebar rightbar"><section><h3>Informações do Talhão</h3><div id="talhaoInfo" class="empty">Clique em um talhão para visualizar o cadastro e o status operacional.</div></section><section><h3>Medições e Anotações</h3><div class="measure-help">Use as ferramentas sobre o mapa. Finalize cada geometria para incluí-la abaixo.</div><div class="tablewrap"><table id="measureTable"><thead><tr><th>#</th><th>Tipo</th><th>Informação</th><th></th></tr></thead><tbody></tbody></table></div><button class="btn" id="exportGeoJSON">Exportar vetores (GeoJSON)</button><button class="btn ghost" id="clearVectors">Limpar todos</button></section></aside>
+<aside class="sidebar rightbar"><section id="reliefLegendSection" hidden><h3 id="reliefLegendTitle">Relevo</h3><div id="reliefLegendColors"></div><label class="count-toggle"><input type="checkbox" id="reliefContoursToggle"><span>Mostrar curvas de nível</span></label><div class="count-note" id="contourMessage" role="status"></div></section><section><h3>Informações florestais</h3><div class="info-switch" aria-label="Visualização das informações"><button type="button" data-info-view="geral" aria-pressed="false">Geral</button><button type="button" data-info-view="talhao" class="active" aria-pressed="true">Por talhão</button></div><div id="plotPanel"><div id="talhaoInfo" class="empty">Clique em um talhão para visualizar a contagem e os dados de plantio.</div></div><div id="generalPanel" hidden><div id="generalSummary"></div><div class="general-table-wrap"><table class="general-table"><thead><tr><th>Talhão</th><th>Área (ha)</th><th>Teórico</th><th>Contado / estimado</th><th>Diferença %</th><th>Data de plantio</th></tr></thead><tbody id="generalTableBody"></tbody><tfoot id="generalTableTotals"></tfoot></table></div><p class="count-note">* Inclui estimativa na parcela de mudas pequenas do CT_T008. Diferença = (teórico − contado/estimado) ÷ teórico; negativo indica contagem acima do teórico.</p></div></section><section><h3>Medições e Anotações</h3><div class="measure-help">Use as ferramentas sobre o mapa. Finalize cada geometria para incluí-la abaixo.</div><div class="tablewrap"><table id="measureTable"><thead><tr><th>#</th><th>Tipo</th><th>Informação</th><th></th></tr></thead><tbody></tbody></table></div><button class="btn" id="exportGeoJSON">Exportar vetores (GeoJSON)</button><button class="btn ghost" id="clearVectors">Limpar todos</button></section></aside>
 <div class="ticker"><b>ALERTAS</b><div class="ticker-window"><div id="tickerText">Selecione uma operação para visualizar os alertas operacionais dos talhões.</div></div></div>
 </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -73,7 +76,7 @@ if (sessionStorage.getItem('decorbras_auth') !== 'ok') {
         <script src="data/Estradas_24.js"></script>
         <script src="data/Benfeitorias_25.js"></script>
         <script src="data/Talhes_26.js"></script>
-        <script src="data/demo_operations.js"></script>
+        <script src="data/decorbras_banco.js"></script><script src="data/relevo_config.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, attributionControl:false, maxZoom:28, minZoom:1
@@ -159,7 +162,7 @@ if (sessionStorage.getItem('decorbras_auth') !== 'ok') {
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
-            maxNativeZoom: 18
+            maxNativeZoom: 17
         });
         layer_OpenTopoMap_0;
         map.createPane('pane_GoogleRoad_1');
@@ -803,7 +806,7 @@ try{map.closePopup();map.eachLayer(function(lyr){if(lyr&&typeof lyr.unbindPopup=
 
 // ===== EcoMap Dashboard V3 =====
 (function(){
- const TODAY=new Date('2026-09-19T12:00:00');
+
  const orthoLayers=[layer_Orto_Decor00_4,layer_Orto_Decor01_5,layer_Orto_Decor02_6,layer_Orto_Decor03_7,layer_Orto_Decor10_8,layer_Orto_Decor11_9,layer_Orto_Decor12_10,layer_Orto_Decor13_11,layer_Orto_Decor14_12,layer_Orto_Decor15_13,layer_Orto_Decor16_14,layer_Orto_Decor17_15,layer_Orto_Decor18_16];
  try{map.removeLayer(layer_Orto_Decorbras_17)}catch(e){}
  const groups={talhoes:[layer_Talhes_26],uso:[layer_Vegetao_23,layer_Estradas_24,layer_Benfeitorias_25],hidro:[layer_Curso_d_agua_19,layer_Aude_20,layer_Banhado_21,layer_APP_22],sicar:[layer_ImveisdoSicar_18],orto:orthoLayers,mds:[layer_MDS_Talhoes_3]};
@@ -818,14 +821,118 @@ try{map.closePopup();map.eachLayer(function(lyr){if(lyr&&typeof lyr.unbindPopup=
  setInterval(()=>document.getElementById('clock').textContent=new Date().toLocaleString('pt-BR'),1000);
  const talhaoMeta={}; (window.json_Talhes_26&&json_Talhes_26.features||[]).forEach(f=>talhaoMeta[f.properties.ID_TALHAO]=f.properties);
  let selected=null,currentOp='';
- function opRow(id){return currentOp&&window.DEMO_OPERATIONS&&DEMO_OPERATIONS[currentOp]?DEMO_OPERATIONS[currentOp].find(x=>x.id===id):null}
- function statusClass(s){return 'status-'+String(s||'SEM').split(' ')[0]}
- function showInfo(id){selected=id;const p=talhaoMeta[id]||{};const r=opRow(id);document.getElementById('talhaoInfo').innerHTML=`<div style="font-size:18px;font-weight:900">${id}</div><div class="info-grid"><div class="info-card"><small>Área</small><b>${Number(p.area_ha||0).toLocaleString('pt-BR',{minimumFractionDigits:3})} ha</b></div><div class="info-card"><small>Fazenda</small><b>Centro</b></div><div class="info-card"><small>Operação</small><b>${currentOp||'—'}</b></div><div class="info-card"><small>Status</small><span class="statuspill ${statusClass(r&&r.status)}">${r?r.status:'—'}</span></div></div>${r?`<div class="info-grid"><div class="info-card"><small>Prevista</small><b>${r.prevista?new Date(r.prevista+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</b></div><div class="info-card"><small>Realizada</small><b>${r.realizada?new Date(r.realizada+'T12:00:00').toLocaleDateString('pt-BR'):'—'}</b></div></div>`:''}`;}
+ const database=window.DECORBRAS_DB||{talhoes:{},operacoes:{}};
+ const cadastro=database.talhoes||{};
+ let view='talhao',pointsEnabled=false,pointsLayer=null,pointsRequest=0;
+ const pendingPoints=new Map();
+ map.createPane('contagemPane');map.getPane('contagemPane').style.zIndex=680;map.getPane('contagemPane').style.pointerEvents='none';
+ const pointsRenderer=L.canvas({pane:'contagemPane',padding:.2});
+ function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ function fmtNumber(value,digits=0){return value===null||value===undefined?'—':Number(value).toLocaleString('pt-BR',{minimumFractionDigits:digits,maximumFractionDigits:digits});}
+ function fmtDate(value){if(!value)return 'Não informada';const date=new Date(value+'T12:00:00');return Number.isNaN(date.getTime())?'Não informada':date.toLocaleDateString('pt-BR');}
+ function fmtPercent(value){return value===null||value===undefined?'—':fmtNumber(value*100,2)+'%';}
+ function statusOf(row){if(!row)return 'SEM PREVISÃO';if(row.realizada)return 'CONCLUÍDO';if(!row.prevista)return 'SEM PREVISÃO';const today=new Date();today.setHours(12,0,0,0);const days=Math.round((new Date(row.prevista+'T12:00:00')-today)/86400000);return days<0?'ATRASADO':days<=Number(database.alerta_dias??30)?'PRÓXIMO':'PROGRAMADO';}
+ function operationRows(name){return (database.operacoes?.[name]||[]).map(row=>({...row,status:statusOf(row)}));}
+ function opRow(id){return operationRows(currentOp).find(row=>row.id===id)||null;}
+ function statusClass(s){return 'status-'+String(s||'SEM').split(' ')[0];}
+ function card(label,value){return `<div class="info-card"><small>${esc(label)}</small><b>${value}</b></div>`;}
+ function updateTalhoesFill(){layer_Talhes_26.eachLayer(layer=>{if(layer._normalFillOpacity===undefined)layer._normalFillOpacity=layer.options.fillOpacity??.5;layer.setStyle({fillOpacity:(pointsEnabled&&view==='talhao'&&pointsLayer)||window.decorbrasTerrainActive?0:layer._normalFillOpacity});});}
+ function clearPoints(){if(pointsLayer){map.removeLayer(pointsLayer);pointsLayer=null;}updateTalhoesFill();}
+ function loadPoints(id,path){
+  if(window.DECORBRAS_PONTOS?.[id])return Promise.resolve(window.DECORBRAS_PONTOS[id]);
+  if(pendingPoints.has(id))return pendingPoints.get(id);
+  const promise=new Promise((resolve,reject)=>{
+   if(!/^data\/contagem_[A-Z0-9]+_T\d{3}\.js$/.test(path)){reject(Error('Arquivo de pontos inválido'));return;}
+   const script=document.createElement('script');script.src=path+'?v='+encodeURIComponent(database.atualizado_em||'1');
+   script.onload=()=>{script.remove();const data=window.DECORBRAS_PONTOS?.[id];if(data)resolve(data);else reject(Error('Camada não encontrada'));};
+   script.onerror=()=>{script.remove();reject(Error('Não foi possível carregar os pontos'));};document.head.appendChild(script);
+  });pendingPoints.set(id,promise);promise.catch(()=>pendingPoints.delete(id));return promise;
+ }
+ async function refreshPoints(){
+  const request=++pointsRequest;clearPoints();
+  const record=cadastro[selected];const checkbox=document.getElementById('countPointsToggle');const message=document.getElementById('countPointsMessage');
+  if(checkbox)checkbox.checked=pointsEnabled;
+  if(!pointsEnabled||view!=='talhao'||!record?.ARQUIVO_PONTOS){if(message)message.textContent='';return;}
+  if(message)message.textContent='Carregando pontos…';
+  try{
+   const data=await loadPoints(selected,record.ARQUIVO_PONTOS);
+   if(request!==pointsRequest||!pointsEnabled||view!=='talhao')return;
+   pointsLayer=L.geoJSON(data,{pane:'contagemPane',pointToLayer:(_feature,latlng)=>L.circleMarker(latlng,{pane:'contagemPane',renderer:pointsRenderer,radius:2.5,color:'#003846',weight:.7,fillColor:'#00ecff',fillOpacity:.9,interactive:false})}).addTo(map);
+   updateTalhoesFill();
+   if(message)message.textContent=fmtNumber(record.TOTAL_CONTADO)+' pontos de contagem no mapa.';
+  }catch(error){if(request!==pointsRequest)return;pointsEnabled=false;if(checkbox)checkbox.checked=false;if(message)message.textContent='Não foi possível carregar a camada. Desmarque e marque novamente para tentar.';}
+ }
+ function renderTalhaoInfo(id){
+  const record=cadastro[id];const p=talhaoMeta[id]||{};const operation=opRow(id);
+  if(!record){document.getElementById('talhaoInfo').innerHTML=`<b>${esc(id)}</b><p>Cadastro não encontrado.</p>`;clearPoints();return;}
+  const hasCount=record.TOTAL_CONTADO!==null&&record.TOTAL_CONTADO!==undefined;const hasEstimate=record.TOTAL_ESTIMADO!==null&&record.TOTAL_ESTIMADO!==undefined;
+  let cards=card('Área',fmtNumber(record.AREA_HA??p.area_ha,3)+' ha')+card('Fazenda',esc(record.FAZENDA||'Centro'))+card('Data de plantio',esc(fmtDate(record.DATA_PLANTIO)))+card('Espaçamento',esc(record.ESPACAMENTO||'—'))+card('Número teórico',fmtNumber(record.TOTAL_TEORICO));
+  if(hasCount){cards+=card('Número contado',fmtNumber(record.TOTAL_CONTADO));if(hasEstimate)cards+=card('Parcela estimada',fmtNumber(record.TOTAL_ESTIMADO))+card('Contado + estimado',fmtNumber(record.TOTAL_CONTADO_ESTIMADO));cards+=card('Diferença para o teórico',fmtPercent(record.DIFERENCA_PCT));}
+  if(currentOp){cards+=card('Operação',esc(currentOp));cards+=`<div class="info-card"><small>Status</small><span class="statuspill ${statusClass(operation?.status)}">${currentOp==='Colheita'&&!operation?.prevista&&!operation?.realizada?'Aguardando informações':esc(operation?.status||'SEM PREVISÃO')}</span></div>`;if(operation?.prevista)cards+=card('Prevista',esc(fmtDate(operation.prevista)));if(operation?.realizada)cards+=card('Realizada',esc(fmtDate(operation.realizada)));}
+  document.getElementById('talhaoInfo').innerHTML=`<div class="plot-title">${esc(id)}</div><div class="info-grid">${cards}</div>${hasEstimate?'<p class="count-note">A estimativa corresponde a 0,886 ha com mudas muito pequenas. Somente os pontos contados aparecem no mapa.</p>':''}${!hasCount?'<p class="count-note">Este talhão possui apenas referência teórica; contagem não realizada.</p>':''}${record.ARQUIVO_PONTOS?'<label class="count-toggle"><input id="countPointsToggle" type="checkbox"><span>Mostrar pontos deste talhão</span></label><div id="countPointsMessage" class="count-note" role="status"></div>':''}`;
+  const checkbox=document.getElementById('countPointsToggle');if(checkbox){checkbox.checked=pointsEnabled;checkbox.addEventListener('change',()=>{pointsEnabled=checkbox.checked;refreshPoints();});}
+ }
+ function renderGeneral(){
+  const records=Object.values(cadastro).sort((a,b)=>a.ID_TALHAO.localeCompare(b.ID_TALHAO));const counted=records.filter(r=>r.TOTAL_CONTADO!==null&&r.TOTAL_CONTADO!==undefined);
+  const totalTheory=records.reduce((n,r)=>n+Number(r.TOTAL_TEORICO||0),0);const totalCount=counted.reduce((n,r)=>n+Number(r.TOTAL_CONTADO_ESTIMADO||0),0);const totalArea=records.reduce((n,r)=>n+Number(r.AREA_HA||0),0);
+  document.getElementById('generalSummary').innerHTML=`<div class="info-grid">${card('Área total',fmtNumber(totalArea,3)+' ha')}${card('Total teórico',fmtNumber(totalTheory))}${card('Contado + estimado',fmtNumber(totalCount))}${card('Talhões com contagem',counted.length+' de '+records.length)}</div><p class="count-note">O total contado/estimado inclui apenas os ${counted.length} talhões avaliados. Os demais apresentam somente o teórico.</p>`;
+  document.getElementById('generalTableBody').innerHTML=records.map(r=>`<tr><td><button class="plot-link" data-plot="${esc(r.ID_TALHAO)}">${esc(r.ID_TALHAO)}</button></td><td>${fmtNumber(r.AREA_HA,3)}</td><td>${fmtNumber(r.TOTAL_TEORICO)}</td><td>${fmtNumber(r.TOTAL_CONTADO_ESTIMADO)}${r.TOTAL_ESTIMADO!==null&&r.TOTAL_ESTIMADO!==undefined?' *':''}</td><td>${fmtPercent(r.DIFERENCA_PCT)}</td><td>${esc(fmtDate(r.DATA_PLANTIO))}</td></tr>`).join('');
+  document.getElementById('generalTableTotals').innerHTML=`<tr><td>Total</td><td>${fmtNumber(totalArea,3)}</td><td>${fmtNumber(totalTheory)}</td><td>${fmtNumber(totalCount)}</td><td>—</td><td>—</td></tr>`;
+  document.querySelectorAll('#generalTableBody [data-plot]').forEach(button=>button.onclick=()=>{const id=button.dataset.plot;const layer=labels.find(x=>x.id===id)?.l;if(layer)map.fitBounds(layer.getBounds(),{maxZoom:19,padding:[15,15]});showInfo(id);});
+ }
+ function setView(next){view=next;document.getElementById('app').classList.toggle('general-mode',view==='geral');document.getElementById('generalPanel').hidden=view!=='geral';document.getElementById('plotPanel').hidden=view==='geral';document.querySelectorAll('[data-info-view]').forEach(button=>{button.classList.toggle('active',button.dataset.infoView===view);button.setAttribute('aria-pressed',String(button.dataset.infoView===view));});if(view==='geral')renderGeneral();refreshPoints();setTimeout(()=>map.invalidateSize(),0);}
+ function showInfo(id){selected=id;if(!cadastro[id]?.ARQUIVO_PONTOS)pointsEnabled=false;renderTalhaoInfo(id);setView('talhao');}
+ document.querySelectorAll('[data-info-view]').forEach(button=>button.onclick=()=>setView(button.dataset.infoView));
  const labels=[];
  layer_Talhes_26.eachLayer(function(l){const id=l.feature&&l.feature.properties.ID_TALHAO;if(!id)return;l.options.interactive=true;if(l._path)l._path.style.pointerEvents='auto';l.on('click',(ev)=>{try{L.DomEvent.stopPropagation(ev)}catch(e){};try{map.closePopup()}catch(e){};showInfo(id)});l.bindTooltip(id,{permanent:true,direction:'center',className:'talhao-label',interactive:true});l.on('tooltipopen',e=>{const el=e.tooltip.getElement();if(el){el.style.pointerEvents='auto';el.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();try{map.closePopup()}catch(e){};showInfo(id)}}});labels.push({id,l});});
- function applyStatus(){const rows=currentOp&&DEMO_OPERATIONS[currentOp]||[];const by=Object.fromEntries(rows.map(x=>[x.id,x]));labels.forEach(({id,l})=>{const r=by[id];let fill='#6ea97f',fo=.5,cls='talhao-label';if(r&&r.status==='ATRASADO'){fill='#d83a3a';fo=.72;cls+=' alert-red'}else if(r&&r.status==='PRÓXIMO'){fill='#f0bd2d';fo=.72;cls+=' alert-yellow'}else if(r&&r.status==='CONCLUÍDO'){fill='#42a66a';fo=.55}else if(r&&r.status==='PROGRAMADO'){fill='#4f83bd';fo=.48}else{fill='#8ea69a';fo=.35}try{l.setStyle({fillColor:fill,fillOpacity:fo,opacity:.65,weight:1.2})}catch(e){}try{const t=l.getTooltip();if(t)t.options.className=cls;if(t&&t.getElement())t.getElement().className='leaflet-tooltip leaflet-zoom-animated leaflet-tooltip-center '+cls}catch(e){}}); updateTicker(rows); if(selected)showInfo(selected);}
+ function applyStatus(){const rows=operationRows(currentOp);const by=Object.fromEntries(rows.map(x=>[x.id,x]));labels.forEach(({id,l})=>{const r=by[id];let fill='#6ea97f',fo=.5,cls='talhao-label';if(r&&r.status==='ATRASADO'){fill='#d83a3a';fo=.72;cls+=' alert-red'}else if(r&&r.status==='PRÓXIMO'){fill='#f0bd2d';fo=.72;cls+=' alert-yellow'}else if(r&&r.status==='CONCLUÍDO'){fill='#42a66a';fo=.55}else if(r&&r.status==='PROGRAMADO'){fill='#4f83bd';fo=.48}else{fill='#8ea69a';fo=.35}l._normalFillOpacity=fo;try{l.setStyle({fillColor:fill,fillOpacity:(pointsEnabled&&view==='talhao'&&pointsLayer)||window.decorbrasTerrainActive?0:fo,opacity:.65,weight:1.2})}catch(e){}try{const t=l.getTooltip();if(t)t.options.className=cls;if(t&&t.getElement())t.getElement().className='leaflet-tooltip leaflet-zoom-animated leaflet-tooltip-center '+cls}catch(e){}}); updateTicker(rows); if(selected)renderTalhaoInfo(selected);}
  function updateTicker(rows){if(!currentOp){document.getElementById('tickerText').textContent='Selecione uma operação para visualizar os alertas operacionais dos talhões.';return}const late=rows.filter(x=>x.status==='ATRASADO'),soon=rows.filter(x=>x.status==='PRÓXIMO');let parts=[];if(late.length)parts.push(`⚠ ${currentOp}: ${late.length} talhão(ões) em atraso — ${late.map(x=>x.id).join(', ')}`);if(soon.length)parts.push(`● ${soon.length} operação(ões) previstas para os próximos 30 dias — ${soon.map(x=>x.id).join(', ')}`);document.getElementById('tickerText').textContent=parts.join('     •     ')||`${currentOp}: sem alertas críticos no momento.`}
  document.getElementById('operation').addEventListener('change',e=>{currentOp=e.target.value;applyStatus()});applyStatus();
+ // Cartografia do relevo: mapas exclusivos e sombreamento automático.
+ const relief=window.DECORBRAS_RELEVO;let activeTerrain=null,contoursOn=false,contoursLayer=null,contoursLoading=null,contourLabels=null;
+ window.decorbrasTerrainActive=false;
+ [['reliefColorPane',420],['reliefShadePane',421],['reliefContoursPane',429],['reliefLabelsPane',650]].forEach(([name,z])=>{map.createPane(name);map.getPane(name).style.zIndex=z;map.getPane(name).style.pointerEvents='none';});
+ const reliefMaps=relief?{hipsometrico:L.imageOverlay('data/hipsometrico.png',relief.bounds,{pane:'reliefColorPane',interactive:false}),declividade:L.imageOverlay('data/declividade.png',relief.bounds,{pane:'reliefColorPane',interactive:false})}:{};
+ const reliefShade=relief?L.imageOverlay('data/sombreamento.png',relief.bounds,{pane:'reliefShadePane',opacity:relief.sombreamento_opacidade,interactive:false}):null;
+ const reliefSection=document.getElementById('reliefLegendSection');
+ function refreshContourLabels(){
+  if(!contourLabels)return;contourLabels.clearLayers();if(!contoursOn||!activeTerrain||map.getZoom()<15||!contoursLayer)return;
+  const bounds=map.getBounds();const anchors=[];const occupied=[];
+  contoursLayer.eachLayer(layer=>{const elevation=Number(layer.feature?.properties.ELEV);if(Math.abs(elevation/10-Math.round(elevation/10))>1e-6)return;
+   const geometry=layer.feature.geometry;const parts=geometry.type==='LineString'?[geometry.coordinates]:geometry.coordinates;
+   parts.forEach(part=>{const visible=part.map(c=>L.latLng(c[1],c[0])).filter(p=>bounds.contains(p));if(visible.length<2)return;const k=Math.floor(visible.length/2),anchor=visible[k],point=map.latLngToContainerPoint(anchor);const prev=map.latLngToContainerPoint(visible[Math.max(0,k-1)]),next=map.latLngToContainerPoint(visible[Math.min(visible.length-1,k+1)]);let angle=Math.atan2(next.y-prev.y,next.x-prev.x)*180/Math.PI;if(angle>90)angle-=180;if(angle< -90)angle+=180;anchors.push({anchor,point,angle,elevation});});
+  });
+  anchors.sort((a,b)=>a.elevation-b.elevation);anchors.forEach(item=>{const size=map.getSize();if(item.point.x<40||item.point.y<20||item.point.x>size.x-40||item.point.y>size.y-20)return;if(occupied.some(p=>Math.abs(p.x-item.point.x)<85&&Math.abs(p.y-item.point.y)<36))return;occupied.push(item.point);L.marker(item.anchor,{pane:'reliefLabelsPane',interactive:false,keyboard:false,icon:L.divIcon({className:'relief-contour-label',iconSize:[80,28],iconAnchor:[40,14],html:`<span style="transform:rotate(${item.angle.toFixed(1)}deg)">${Math.round(item.elevation)} m</span>`})}).addTo(contourLabels);});
+ }
+ function loadContours(){
+  if(window.json_curvas_nivel)return Promise.resolve(window.json_curvas_nivel);if(contoursLoading)return contoursLoading;
+  contoursLoading=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='data/curvas_nivel.js?v=20261013';script.onload=()=>{script.remove();if(window.json_curvas_nivel)resolve(window.json_curvas_nivel);else reject(Error('Curvas indisponíveis'));};script.onerror=()=>{script.remove();reject(Error('Falha ao carregar curvas'));};document.head.appendChild(script);});contoursLoading.catch(()=>{contoursLoading=null;});return contoursLoading;
+ }
+ async function refreshContours(){
+  const message=document.getElementById('contourMessage');if(!contoursOn||!activeTerrain){if(contoursLayer&&map.hasLayer(contoursLayer))map.removeLayer(contoursLayer);if(contourLabels)map.removeLayer(contourLabels);if(message)message.textContent='';return;}
+  if(message)message.textContent='Carregando curvas…';
+  try{const data=await loadContours();if(!contoursOn||!activeTerrain)return;
+   if(!contoursLayer)contoursLayer=L.geoJSON(data,{pane:'reliefContoursPane',interactive:false,renderer:L.canvas({pane:'reliefContoursPane'}),style:feature=>({color:'#000000',weight:Math.abs(Number(feature.properties.ELEV)/10-Math.round(Number(feature.properties.ELEV)/10))<1e-6?1.51:.76,opacity:1,interactive:false})});
+   if(!map.hasLayer(contoursLayer))contoursLayer.addTo(map);if(!contourLabels)contourLabels=L.layerGroup();if(!map.hasLayer(contourLabels))contourLabels.addTo(map);refreshContourLabels();if(message)message.textContent='Rótulos nas curvas mestras a cada 10 m.';
+  }catch(error){contoursOn=false;const check=document.getElementById('reliefContoursToggle');if(check)check.checked=false;if(message)message.textContent='Não foi possível carregar as curvas. Marque novamente para tentar.';}
+ }
+ function renderReliefLegend(){
+  reliefSection.hidden=!activeTerrain;if(!activeTerrain)return;
+  const name=activeTerrain==='hipsometrico'?'Hipsométrico':'Declividade';document.getElementById('reliefLegendTitle').textContent=name;
+  document.getElementById('reliefLegendColors').innerHTML=relief.paletas[activeTerrain].map(p=>`<div class="relief-legend-row"><i style="background:${p.cor}"></i><span>${esc(p.rotulo)}</span></div>`).join('');
+  document.getElementById('reliefContoursToggle').checked=contoursOn;
+ }
+ function setTerrain(name,on){
+  if(!relief){document.getElementById('tickerText').textContent='Arquivos de relevo não encontrados.';return;}
+  activeTerrain=on?name:null;document.querySelectorAll('[data-terrain]').forEach(input=>input.checked=input.dataset.terrain===activeTerrain);
+  Object.entries(reliefMaps).forEach(([key,layer])=>{if(key===activeTerrain){if(!map.hasLayer(layer))layer.addTo(map);}else if(map.hasLayer(layer))map.removeLayer(layer);});
+  if(activeTerrain){if(!map.hasLayer(reliefShade))reliefShade.addTo(map);}else if(map.hasLayer(reliefShade))map.removeLayer(reliefShade);
+  window.decorbrasTerrainActive=Boolean(activeTerrain);updateTalhoesFill();renderReliefLegend();refreshContours();
+ }
+ document.querySelectorAll('[data-terrain]').forEach(input=>input.addEventListener('change',()=>setTerrain(input.dataset.terrain,input.checked)));
+ document.getElementById('reliefContoursToggle').addEventListener('change',event=>{contoursOn=event.target.checked;refreshContours();});
+ map.on('zoomend moveend',refreshContourLabels);toggleGroup('mds',false);
+
  document.getElementById('searchTalhao').addEventListener('change',e=>{const q=e.target.value.trim().toUpperCase();const hit=labels.find(x=>x.id===q||x.id.endsWith('_'+q));if(hit){map.fitBounds(hit.l.getBounds(),{maxZoom:18});showInfo(hit.id)}});
  // Botão principal de medições: expande/recolhe as três ferramentas.
  const measureTools=document.getElementById('measureTools'),measureMain=document.getElementById('measureMain');
@@ -845,7 +952,7 @@ try{map.closePopup();map.eachLayer(function(lyr){if(lyr&&typeof lyr.unbindPopup=
  document.getElementById('finishDraw').onclick=()=>{if(!mode||!pts.length)return;if(mode==='line'&&pts.length<2)return alert('Adicione pelo menos 2 pontos.');if(mode==='poly'&&pts.length<3)return alert('Adicione pelo menos 3 pontos.');let layer,info,type;if(mode==='point'){layer=L.circleMarker(pts[0],{radius:6,color:'#173d2e',fillColor:'#2f765a',fillOpacity:1});type='Ponto';info=`${pts[0].lat.toFixed(6)}, ${pts[0].lng.toFixed(6)}`}else if(mode==='line'){layer=L.polyline(pts,{color:'#173d2e',weight:4});let d=0;for(let i=1;i<pts.length;i++)d+=map.distance(pts[i-1],pts[i]);type='Caminho';info=fmtDist(d)}else{layer=L.polygon(pts,{color:'#173d2e',weight:3,fillColor:'#2f765a',fillOpacity:.18});type='Área';let a=areaGeo(pts);info=(a/10000).toFixed(4).replace('.',',')+' ha'}if(temp){map.removeLayer(temp);temp=null}finished.addLayer(layer);records.push({type,info,layer});refreshTable();cancel()};
  document.getElementById('clearVectors').onclick=()=>{if(confirm('Limpar todas as medições finalizadas?')){finished.clearLayers();records.length=0;refreshTable()}};
  document.getElementById('exportGeoJSON').onclick=()=>{if(!records.length)return alert('Não há vetores finalizados.');const gj=finished.toGeoJSON();gj.features.forEach((f,i)=>Object.assign(f.properties,{tipo:records[i].type,medicao:records[i].info}));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(gj,null,2)],{type:'application/geo+json'}));a.download='medicoes_decorbras.geojson';a.click()};
- document.getElementById('exportCSV').onclick=()=>{const op=currentOp||'Plantio',rows=DEMO_OPERATIONS[op]||[];let csv='ID_TALHAO;STATUS;DATA_PREVISTA;DATA_REALIZADA;AREA_HA\n'+rows.map(r=>[r.id,r.status,r.prevista||'',r.realizada||'',String(r.area).replace('.',',')].join(';')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=`${op}_Decorbras.csv`;a.click()};document.getElementById('printReport').onclick=()=>window.print();
+ document.getElementById('exportCSV').onclick=()=>{const columns=['ID_TALHAO','AREA_HA','TOTAL_TEORICO','TOTAL_CONTADO','TOTAL_ESTIMADO','TOTAL_CONTADO_ESTIMADO','DIFERENCA_PCT','DATA_PLANTIO','TIPO_CONTAGEM'];const quote=value=>'"'+String(value??'').replace(/"/g,'""')+'"';const rows=Object.values(cadastro).sort((a,b)=>a.ID_TALHAO.localeCompare(b.ID_TALHAO));const csv=columns.join(';')+'\r\n'+rows.map(r=>columns.map(k=>quote(typeof r[k]==='number'?String(r[k]).replace('.',','):r[k])).join(';')).join('\r\n');const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const link=document.createElement('a');link.href=url;link.download='Contagem_Decorbras.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};document.getElementById('printReport').onclick=()=>window.print();
 })();
 </script>        
     
